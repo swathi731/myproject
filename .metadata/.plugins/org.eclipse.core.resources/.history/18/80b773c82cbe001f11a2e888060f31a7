@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>About Us - Our Company</title>
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+    </header>
+    <nav>
+        <button th:action="@{/about}" method="post">about</button>
+        <a href="about.html">About Us</a> | 
+        <a href="contact.html">Contact Us</a>
+    </nav>
+    <div>
+        <p>
+            Welcome to [Your Company Name]! We are committed to delivering the best products and services to our customers.
+            Our mission is to innovate and provide solutions that exceed expectations.
+        </p>
+        <h2>Our Values</h2>
+        <ul>
+            <li>Customer Satisfaction</li>
+            <li>Innovation</li>
+            <li>Integrity</li>
+            <li>Teamwork</li>
+        </ul>
+    </div>
+</body>
+</html>

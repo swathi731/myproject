@@ -1,0 +1,25 @@
+package com.sathya.springboot.product.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.sathya.springboot.product.model.Product;
+import com.sathya.springboot.product.service.Productservice;
+
+public class Controllerp {
+	@Autowired
+	Productservice productservice;
+	@GetMapping("/pro")
+	public String getproductform() {
+		return "add-product";
+		
+	}
+	 @PostMapping ("/th:action=\"@{/saveproduct}\" method=\"post\">\r\n")
+	public String saveproduct(Product product) {
+		System.out.println(product);
+		return "success";
+	}
+
+
+}

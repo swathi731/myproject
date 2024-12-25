@@ -1,0 +1,24 @@
+package com.sathya.springboot.product.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.sathya.springboot.product.model.Product;
+
+
+@Controller
+public class Formcontroller {
+
+	@GetMapping("/home")
+	public String getproductform() {
+		return "Home";
+	
+	}
+	 @PostMapping ("/about")
+		public String saveproduct(Product product) {
+			System.out.println(product);
+			return "Aboutus";
+	
+}
+}

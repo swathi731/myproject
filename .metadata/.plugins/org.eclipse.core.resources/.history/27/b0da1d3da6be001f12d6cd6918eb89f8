@@ -1,0 +1,29 @@
+package com.sathya.springboot.product.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.sathya.springboot.product.entity.Productentity;
+import com.sathya.springboot.product.service.Productservice;
+
+import ch.qos.logback.core.model.Model;
+
+@Controller
+
+public class Productcontroller1 {
+	@Autowired
+	Productservice productservice;
+	@GetMapping("/getallproducts")
+	public String getallproducts(Model model) {
+		Class<? extends Productservice>products=productservice.getClass();
+		model.addattribute("products",products);
+		return"product-list";
+		
+	}
+	
+	
+
+}

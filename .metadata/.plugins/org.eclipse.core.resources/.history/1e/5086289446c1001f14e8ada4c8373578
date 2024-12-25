@@ -1,0 +1,104 @@
+package com.sathya.springboot.product.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sathya.springboot.product.entity.Productentity;
+import com.sathya.springboot.product.model.Product;
+import com.sathya.springboot.product.repository.productrepository;
+
+@Service
+public class Productservice {
+
+    @Autowired
+    private productrepository productrepository;
+
+    // Save product details
+    public void saveProductDetails(Product productmodel) {
+        double stockValue = productmodel.getPrice() * productmodel.getQuantity();
+        double discountPrice = calculateDiscountPrice(productmodel.getPrice(), productmodel.getDiscountrate());
+        double taxPrice = productmodel.getPrice(); // Assuming tax rate is included in price
+        double offerPrice = productmodel.getPrice() - discountPrice;
+        double finalPrice = offerPrice + taxPrice;
+
+        Productentity productEntity = new Productentity();
+
+        productEntity.setName(productmodel.getName());
+        productEntity.setPrice(productmodel.getPrice());
+        productEntity.setQuantity(productmodel.getQuantity());
+        productEntity.setStockvalue(stockValue);
+        productEntity.setDiscountprice(discountPrice);
+        productEntity.setTaxrate(taxPrice);
+        productEntity.setOfferprice(offerPrice);
+        productEntity.setFinalprice(finalPrice);
+        productEntity.setBrand(productmodel.getBrand());
+        productEntity.setMadein(productmodel.getMadein());
+        productEntity.setDiscountrate(productmodel.getDiscountrate());
+
+        // Logging values for debugging
+        System.out.println("Saving Product Details:");
+        System.out.println("Name: " + productmodel.getName());
+        System.out.println("Discount Rate: " + productmodel.getDiscountrate());
+        System.out.println("Discount Price: " + discountPrice);
+
+        productrepository.save(productEntity);
+    }
+
+    // Search for product by ID
+    public Productentity searchByid(Long id) {
+        Optional<Productentity> optionalData = productrepository.findById(id);
+        return optionalData.orElse(null); // Return null if not found
+    }
+
+    // Get all products
+    public List<Productentity> getallproduct() {
+        return productrepository.findAll();
+    }
+
+    // Delete product by ID
+    public void deletebyid(Long id) {
+        productrepository.deleteById(id);
+    }
+
+    // Update product details
+    public void updateProductDetails(Productentity product) {
+        Optional<Productentity> existingProductOpt = productrepository.findById(product.getId());
+        if (existingProductOpt.isPresent()) {
+            Productentity existingProduct = existingProductOpt.get();
+
+            // Update the existing product fields
+            double discountPrice = calculateDiscountPrice(product.getPrice(), product.getDiscountrate());
+            double offerPrice = product.getPrice() - discountPrice;
+            double finalPrice = offerPrice + product.getTaxrate();
+
+            existingProduct.setName(product.getName());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setQuantity(product.getQuantity());
+            existingProduct.setStockvalue(product.getPrice() * product.getQuantity());
+            existingProduct.setDiscountprice(discountPrice);
+            existingProduct.setTaxrate(product.getTaxrate());
+            existingProduct.setOfferprice(offerPrice);
+            existingProduct.setFinalprice(finalPrice);
+            existingProduct.setBrand(product.getBrand());
+            existingProduct.setMadein(product.getMadein());
+            existingProduct.setDiscountrate(product.getDiscountrate());
+
+            // Logging values for debugging
+            System.out.println("Updating Product Details:");
+            System.out.println("ID: " + product.getId());
+            System.out.println("Discount Rate: " + product.getDiscountrate());
+            System.out.println("Discount Price: " + discountPrice);
+
+            // Save the updated product back to the database
+            productrepository.save(existingProduct);
+        }
+    }
+
+    // Utility method to calculate discount price
+    private double calculateDiscountPrice(double price, double discountRate) {
+        return price * discountRate / 100;
+    }
+}

@@ -1,0 +1,13 @@
+<html>
+	<head>
+		<title>Search</title>
+	</head>
+	<body>
+		<h2>Search for a product</h2>
+		<form th:action="@{/searchnyid}"method="post">
+			<label for="id">Enter ID:</label>
+			<input type="number"name="id"id="id"		
+		
+		</form>
+	</body>
+</html>

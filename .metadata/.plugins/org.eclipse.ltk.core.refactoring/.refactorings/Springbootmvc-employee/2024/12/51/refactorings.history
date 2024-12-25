@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Springbootmvc-employee/src/main/resources/templates/employee.html&apos; to &apos;add-employee.html&apos;" description="Rename resource &apos;employee.html&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/resources/templates/employee.html" name="add-employee.html" stamp="1734514719410" updateReferences="true"/>
+</session>

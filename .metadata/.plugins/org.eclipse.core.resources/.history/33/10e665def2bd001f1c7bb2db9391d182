@@ -1,0 +1,17 @@
+package com.sathya.springboot.product.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+@Controller
+public class Formcontroller {
+
+	@GetMapping("/home")
+	public String getproductform() {
+		return "Home";
+		
+	}
+	
+	
+}

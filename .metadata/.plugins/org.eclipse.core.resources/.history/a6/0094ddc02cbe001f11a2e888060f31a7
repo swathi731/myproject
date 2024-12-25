@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Contact Us - Our Company</title>
+</head>
+<body>
+    <header>
+        <h1>Contact Us</h1>
+    </header>
+    <nav>
+        <a href="home.html">Home</a> | 
+        <a href="about.html">About Us</a> | 
+        <a href="contact.html">Contact Us</a>
+    </nav>
+    <div>
+        <form th:action="@{/sendmessage}" method="post">
+            <label for="contactName">Your Name:</label><br>
+            <input type="text" id="contactName" name="contactName" required><br><br>
+            
+            <label for="contactEmail">Your Email:</label><br>
+            <input type="email" id="contactEmail" name="contactEmail" required><br><br>
+            
+            <label for="contactMessage">Your Message:</label><br>
+            <textarea id="contactMessage" name="contactMessage" rows="5" required></textarea><br><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>

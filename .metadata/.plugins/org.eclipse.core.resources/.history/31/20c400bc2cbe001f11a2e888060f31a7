@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Home - Our Company</title>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Company</h1>
+    </header>
+    <nav>
+		<button th:action="@{/about}" method="post">about</button>
+         | 
+        <a href="about.html">About Us</a> | 
+        <a href="contact.html">Contact Us</a>
+    </nav>
+    <div>
+        <h2>Our Products</h2>
+        <p>
+            Explore our wide range of innovative and high-quality products designed to meet your needs.
+        </p>
+        <a href="product.html">View Product Form</a>
+    </div>
+</body>
+</html>

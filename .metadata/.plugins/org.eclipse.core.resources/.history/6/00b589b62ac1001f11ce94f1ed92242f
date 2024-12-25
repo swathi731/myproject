@@ -1,0 +1,123 @@
+package com.sathya.springboot.product.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sathya.springboot.product.entity.Productentity;
+import com.sathya.springboot.product.model.Product;
+import com.sathya.springboot.product.repository.Productrepository;
+
+@Service
+public class Productservice {
+
+    @Autowired
+    private Productrepository productrepository;
+
+    // Save Product Details
+    public void saveProductDetails(Product productmodel) {
+        double stockValue = productmodel.getPrice() * productmodel.getQuantity();
+        double discountPrice = productmodel.getPrice() * productmodel.getDiscountrate() / 100;
+        double taxPrice = productmodel.getTaxrate();
+        double offerPrice = productmodel.getPrice() - discountPrice;
+        double finalPrice = offerPrice + taxPrice;
+
+        Productentity productEntity = new Productentity();
+
+        productEntity.setName(productmodel.getName());
+        productEntity.setPrice(productmodel.getPrice());
+        productEntity.setQuantity(productmodel.getQuantity());
+        productEntity.setStockvalue(stockValue);
+        productEntity.setDiscountprice(discountPrice);
+        productEntity.setTaxrate(taxPrice);
+        productEntity.setOfferprice(offerPrice);
+        productEntity.setFinalprice(finalPrice);
+        productEntity.setBrand(productmodel.getBrand());
+        productEntity.setMadein(productmodel.getMadein());
+        productEntity.setDiscountrate(productmodel.getDiscountrate());
+
+        productrepository.save(productEntity);
+    }
+
+    // Search Product by ID
+    public Productentity searchByid(Long id) {
+        Optional<Productentity> optionaldata = productrepository.findById(id);
+        return optionaldata.orElse(null);
+    }
+
+    // Get All Products
+    public List<Productentity> getallproduct() {
+        return productrepository.findAll();
+    }
+
+    // Delete Product by ID
+    public void deletebyid(Long id) {
+        productrepository.deleteById(id);
+    }
+
+    // Update Product Details
+    public void updateProductDetails(Productentity product) {
+        Optional<Productentity> existingProductOpt = productrepository.findById(product.getId());
+        if (existingProductOpt.isPresent()) {
+            Productentity existingProduct = existingProductOpt.get();
+
+            existingProduct.setName(product.getName());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setQuantity(product.getQuantity());
+            existingProduct.setStockvalue(product.getPrice() * product.getQuantity());
+            existingProduct.setDiscountprice(product.getPrice() * product.getDiscountrate() / 100);
+            existingProduct.setTaxrate(product.getTaxrate());
+            existingProduct.setOfferprice(product.getPrice() - existingProduct.getDiscountprice());
+            existingProduct.setFinalprice(existingProduct.getOfferprice() + product.getTaxrate());
+            existingProduct.setBrand(product.getBrand());
+            existingProduct.setMadein(product.getMadein());
+            existingProduct.setDiscountrate(product.getDiscountrate());
+
+            productrepository.save(existingProduct);
+        }
+    }
+
+    // Update Product by ID
+    public void updateProduct(Long id, Product product) {
+        Optional<Productentity> existingProductOpt = productrepository.findById(id);
+        if (existingProductOpt.isPresent()) {
+            Productentity existingProduct = existingProductOpt.get();
+
+            existingProduct.setName(product.getName());
+            existingProduct.setPrice(product.getPrice());
+            existingProduct.setQuantity(product.getQuantity());
+            existingProduct.setStockvalue(product.getPrice() * product.getQuantity());
+            existingProduct.setDiscountprice(product.getPrice() * product.getDiscountrate() / 100);
+            existingProduct.setTaxrate(product.getTaxrate());
+            existingProduct.setOfferprice(product.getPrice() - existingProduct.getDiscountprice());
+            existingProduct.setFinalprice(existingProduct.getOfferprice() + product.getTaxrate());
+            existingProduct.setBrand(product.getBrand());
+            existingProduct.setMadein(product.getMadein());
+            existingProduct.setDiscountrate(product.getDiscountrate());
+
+            productrepository.save(existingProduct);
+        }
+    }
+
+    // Find Product by ID and map to Product model
+    public Product findById(Long id) {
+        Optional<Productentity> existingProductOpt = productrepository.findById(id);
+        if (existingProductOpt.isPresent()) {
+            Productentity entity = existingProductOpt.get();
+
+            Product productModel = new Product();
+            productModel.setName(entity.getName());
+            productModel.setPrice(entity.getPrice());
+            productModel.setQuantity(entity.getQuantity());
+            productModel.setDiscountrate(entity.getDiscountrate());
+            productModel.setTaxrate(entity.getTaxrate());
+            productModel.setBrand(entity.getBrand());
+            productModel.setMadein(entity.getMadein());
+
+            return productModel;
+        }
+        return null;
+    }
+}
